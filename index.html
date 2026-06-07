@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자리배치</title>
+    <style>
+        
+        .classroom {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <h1>랜덤 자리 배치</h1>
+    <div class="screen">칠 판 (교탁)</div>
+
+    <div class="classroom" id="classroom">
+        </div>
+
+    <button onclick="arrangeSeats()">자리 섞기</button>
+
+    <script>
+        const studentNames = {
+            1: "강태현",
+            2: "권정후",
+            3: "김기성",
+            4: "김민재",
+            5: "손예준",
+            6: "송승태",
+            7: "유신명",
+            8: "장혁인",
+            9: "정지용",
+            10: "최성",
+            11: "허겸",
+            12: "황시온"
+        };
+        
+        function arrangeSeats() {
+
+            let numbers = [];
+            for (let i = 1; i <= 12; i++) {
+                numbers.push(i);
+            }
+
+            for (let i = numbers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+            }
+
+            const classroom = document.getElementById('classroom');
+            classroom.innerHTML = ''; 
+            numbers.forEach((num, index) => {
+                const desk = document.createElement('div');
+                desk.className = 'desk';
+                const name = studentNames[num]; 
+                
+                desk.innerHTML = `<span>자리 ${index + 1}</span><strong>${name}</strong> (${num}번)`;
+                
+                classroom.appendChild(desk);
+            });
+        }
+
+
+    </script>
+
+</body>
+</html>
